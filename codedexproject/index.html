@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore UI</title>
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #a3b565;
+            color: #e4e4e4;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #ced5ac, #f9e29e);
+            padding: 40px 20px;
+            text-align: center;
+            color: #1a1a2e;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin: 0;
+            color: #ffffff;
+            text-shadow: 2px 2px #1a1a2e;
+        }
+
+        .header p {
+            font-size: 14px;
+            margin: 10px 0 0;
+            color: #474747;
+        }
+
+        .header .pixel-deco {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://via.placeholder.com/1500x300'); /* Placeholder for pixel graphic */
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .pixel-gifs img {
+            width: 80px;
+            position: absolute;
+            z-index: 2;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .pixel-star {
+            top: 20px;
+            left: 170px;
+        }
+
+        .pixel-heart {
+            top: 20px;
+            right: 170px;
+        }
+
+        .pixel-book {
+            bottom: 20px;
+            left: 170px;
+        }
+
+        .pixel-character {
+            bottom: 20px;
+            right: 170px;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 0.5fr 3fr 1.5fr;
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .side-navbar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f9e29e;
+            border: 2px solid #dc6353;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            gap: 20px;
+        }
+
+        .side-navbar button {
+            background-color: #f9e29e;
+            border: 2px solid #dc6353;
+            color: #ffcc00;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .side-navbar button:hover {
+            background-color: #d1d175;
+            color: #1a1a2e;
+        }
+
+        .main {
+            background: #f9e29e;
+            border: 2px solid #dc6353;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .chat {
+            background: #f9e29e;
+            border: 2px solid #dc6353;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #dc6353;
+            background: #fff2d2;
+            color: #525252;
+            border-radius: 6px;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: #ff8c00;
+            border: 2px solid #dc6353;
+            color: #1a1a2e;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .category {
+            padding: 10px;
+            background: #ae8569;
+            border: 2px solid #dc6353;
+            color: #e4e4e4;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            flex: 0 0 auto;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .popular {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .book-card {
+            background: #ffc1c6;
+            border: 2px solid #dc6353;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border: 2px solid #dc6353;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .book-card h3 {
+            font-size: 14px;
+            color: #ae8569;
+            margin: 10px 0;
+        }
+
+        .book-card p {
+            font-size: 12px;
+            margin: 5px 0;
+            color:#525252;
+        }
+
+        .book-card button {
+            padding: 10px;
+            background: #ff8c00;
+            border: 2px solid #ffcc00;
+            color: #1a1a2e;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .chat .messages {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            background: #ecbe6a;
+            border: 2px solid #ffcc00;
+            padding: 10px;
+            color: #7d7d7d;
+        }
+
+        .chat input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #dc6353;
+            background: #fff2d2;
+            color: #7b7979;
+            border-radius: 6px;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        h2 {
+            color: #ffcc00;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        p {
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    </style>
+</head>
+<body>
+    <!-- Retro Themed Header -->
+    <div class="header">
+        <div class="header-content">
+            <img src="cooltext471846082344143.png" alt="Pixel Bookstore Logo" style="max-width: 100%; height: auto;">
+
+            <p>Your gateway to explore the world of books!</p>
+        </div>
+        <div class="pixel-deco"></div>
+        <div class="pixel-gifs">
+            <img class="pixel-star" src="squid.gif" alt="Pixel Star">
+            <img class="pixel-heart" src="heart.gif" alt="Pixel Heart">
+            <img class="pixel-book" src="howl.gif" alt="Pixel Book">
+            <img class="pixel-character" src="cat.gif" alt="Pixel Character">
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <!-- Side Navbar -->
+        <div class="side-navbar">
+            <button>🏠</button>
+            <button>📚</button>
+            <button>⭐</button>
+            <button>💬</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" placeholder="Search for books">
+                <button>Search</button>
+            </div>
+
+            <!-- Categories -->
+            <div class="categories">
+                <div class="category">eBooks</div>
+                <div class="category">New</div>
+                <div class="category">Bestsellers</div>
+                <div class="category">Audiobooks</div>
+                <div class="category">Fiction</div>
+                <div class="category">Romance</div>
+            </div>
+
+            <!-- Popular Books -->
+            <h2>Popular</h2>
+            <div class="popular">
+                <div class="book-card">
+                    <img src="harrypotter.jpg" alt="Book Cover">
+                    <h3>Harry Potter: Prisioner of Azkaban</h3>
+                    <p>J.K Rowling</p>
+                    <p>$20</p>
+                    <button>BUY NOW</button>
+                </div>
+                <div class="book-card">
+                    <img src="mistletoe.jpg" alt="Book Cover">
+                    <h3>Meet me under the mistletoe</h3>
+                    <p>Jenny</p>
+                    <p>$25</p>
+                    <button>BUY NOW</button>
+                </div>
+                <div class="book-card">
+                    <img src="https://via.placeholder.com/150" alt="Book Cover">
+                    <h3>Good Girl's guide to Murder</h3>
+                    <p>Holly Jackson</p>
+                    <p>$35</p>
+                    <button>BUY NOW</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Box -->
+        <div class="chat">
+            <div class="messages">
+                <p>Good Day!</p>
+                <p>I'm looking for gift editions of the Harry Potter books...</p>
+            </div>
+            <input type="text" placeholder="Write a message...">
+        </div>
+    </div>
+
+    <script>
+        // Add interactivity here if needed
+        document.querySelector('button').addEventListener('click', () => {
+            alert('Search functionality is not implemented yet!');
+        });
+    </script>
+</body>
+</html>
+
